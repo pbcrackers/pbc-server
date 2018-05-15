@@ -1,0 +1,22 @@
+questions:
+  - question: How many planets are in the solar system?
+    answers:
+      a: 7
+      b: 8
+      c: 10
+      d: 12
+    correct_answer: b
+  - question: Who is the god of war in Greek mythology?
+    answers:
+      a: Ares
+      b: Apollo
+      c: Perseus
+      d: Enkidu
+    correct_answer: a
+  - question: How many seconds are in a year?
+    answers:
+      a: 31795200
+      b: 31622400
+      c: 25920000
+      d: 31536000
+    correct_answer: d

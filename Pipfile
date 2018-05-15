@@ -7,6 +7,7 @@ name = "pypi"
 pusher = "*"
 python-dotenv = "*"
 click = "*"
+pyyaml = "*"
 
 [dev-packages]
 

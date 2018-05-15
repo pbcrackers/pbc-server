@@ -1,5 +1,6 @@
 import os
 import pusher
+import yaml
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -16,5 +17,10 @@ pusher_client = pusher.Pusher(
   ssl=True
 )
 
-while True:
-    pass
+with open("questions.yaml", 'r') as stream:
+  try:
+    print(yaml.safe_load(stream))
+  except yaml.YAMLError as e:
+    print("Failed to parse questions file")
+    print(e)
+
