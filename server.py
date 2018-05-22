@@ -1,6 +1,6 @@
 import falcon
+import multiprocessing
 import pbc.game
-import threading
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -15,8 +15,8 @@ class StartGameResource(object):
     def on_get(self, req, res):
         """Start the game"""
         game = pbc.game.Game()
-        game_thread = threading.Thread(target = game.run, args = ())
-        game_thread.start()
+        game_proc = multiprocessing.Process(target = game.run, args =())
+        game_proc.start()
         res.status = falcon.HTTP_200
         res.body = ('Game started')
 

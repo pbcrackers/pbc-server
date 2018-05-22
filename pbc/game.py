@@ -35,3 +35,4 @@ class Game:
                     'answers': q['answers']
                 }))
             time.sleep(30)
+        print("all questions have been asked")
