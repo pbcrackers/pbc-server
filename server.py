@@ -1,39 +1,29 @@
-import os
-import pusher
-import json
-import yaml
-import time
+import falcon
+import pbc.game
+import threading
+
 from dotenv import load_dotenv
 from pathlib import Path
 
+class AnswerResource(object):
+    def on_get(self, req, res):
+        """Handles all get requests"""
+        res.status = falcon.HTTP_200
+        res.body = ('Hello, world!')
+
+class StartGameResource(object):
+    def on_get(self, req, res):
+        """Start the game"""
+        game = pbc.game.Game()
+        game_thread = threading.Thread(target = game.run, args = ())
+        game_thread.start()
+        res.status = falcon.HTTP_200
+        res.body = ('Game started')
+
+
+app = falcon.API()
+app.add_route('/answer', AnswerResource())
+app.add_route('/start', StartGameResource())
+
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path, verbose=True)
-
-print('starting server')
-
-pusher_client = pusher.Pusher(
-    app_id=os.getenv("PUSHER_APP_ID"),
-    key=os.getenv("PUSHER_KEY"),
-    secret=os.getenv("PUSHER_SECRET"),
-    cluster=os.getenv("PUSHER_CLUSTER"),
-    ssl=True
-)
-
-with open("questions.yaml", 'r') as stream:
-    try:
-        questions = yaml.safe_load(stream)['questions']
-        print(questions)
-    except yaml.YAMLError as e:
-        print("Failed to parse questions file")
-        print(e)
-        exit
-
-for q in questions:
-    print('asking question ' + q['question'])
-    pusher_client.trigger(
-        'questions', 'ask-question',
-        json.dumps({
-            'question': q['question'],
-            'answers': q['answers']
-        }))
-    time.sleep(30)

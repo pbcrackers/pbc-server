@@ -6,8 +6,9 @@ name = "pypi"
 [packages]
 pusher = "*"
 python-dotenv = "*"
-click = "*"
 pyyaml = "*"
+falcon = "*"
+gunicorn = "*"
 
 [dev-packages]
 
